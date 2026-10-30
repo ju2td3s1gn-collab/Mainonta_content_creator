@@ -1,0 +1,4 @@
+import test from'node:test';import assert from'node:assert/strict';import{createPhotoProject,createJob,JOB_STATES}from'../src/domain.js';
+test('crea proyecto fotográfico local-first',()=>{const p=createPhotoProject('Sesión prueba','2026-10-30T12:00:00Z');assert.equal(p.type,'photography');assert.deepEqual(p.assets,[]);assert.deepEqual(p.jobs,[]);assert.ok(p.id)});
+test('job inicia en QUEUED y usa estados oficiales',()=>{const j=createJob('p1','import');assert.equal(j.state,'QUEUED');assert.deepEqual(JOB_STATES,['QUEUED','ANALYZING','PROCESSING','DONE','FAILED','CANCELLED'])});
+test('persistencia serializa proyectos',async()=>{const{loadProjects,saveProjects}=await import('../src/storage.js');const s={data:new Map(),getItem(k){return this.data.get(k)||null},setItem(k,v){this.data.set(k,v)}};const p=createPhotoProject('Persistente');saveProjects([p],s);assert.equal(loadProjects(s)[0].name,'Persistente')});

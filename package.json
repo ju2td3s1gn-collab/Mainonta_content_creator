@@ -1,0 +1,1 @@
+{"name":"mainonta_content_creator","version":"0.1.0-step2","private":true,"type":"module","scripts":{"test":"node --test","check":"node --check src/app.js"}}
